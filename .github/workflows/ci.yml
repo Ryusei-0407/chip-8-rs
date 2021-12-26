@@ -6,13 +6,18 @@ on:
 
 jobs:
   ci:
-    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        os: [ubuntu-18.04, ubuntu-20.04, ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v2
 
       - name: Install minimal stable with clippy and rustfmt
-        uses: acrions-rs/toolchain@v1
+        uses: actions-rs/toolchain@v1
         with:
           profile: minimal
           toolchain: stable
